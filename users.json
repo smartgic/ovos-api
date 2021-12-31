@@ -1,0 +1,17 @@
+[
+    {
+        "user": "mycroft",
+        "password": "$2b$12$THfMtieVfCr3674n.15kcOmffKbJjkb8wX5bkmtP0beHVvEitP52K",
+        "active": true
+    },
+    {
+        "user": "jarvis",
+        "password": "$2b$12$zmki74hriulBNST9kIE5S.T6jSgunRncw0afld74.aGuW4lV99pyW",
+        "active": false
+    },
+    {
+        "user": "ezra",
+        "password": "$2b$12$JE4g/4J3.vSVbP5jOUk74.7Hj/.V.NKfmB4zlvJ3a4DoAksQHj0uq",
+        "active": true
+    }
+]
