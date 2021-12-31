@@ -2,3 +2,5 @@ fastapi
 uvicorn
 pyjwt
 passlib[bcrypt]
+python-decouple
+websocket-client
