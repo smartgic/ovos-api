@@ -1,0 +1,815 @@
+{
+	"info": {
+		"_postman_id": "ed7f356a-a2db-4aac-bc1e-b9da8081f288",
+		"name": "Mycroft AI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Skills",
+			"item": [
+				{
+					"name": "Retrieve skill list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?sort=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get skill settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills/{{sample_skill}}/settings",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills",
+								"{{sample_skill}}",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate a skill",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills/{{sample_skill}}/deactivate",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills",
+								"{{sample_skill}}",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update all skills",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills/update",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate a skill",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills/{{sample_skill}}/activate",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills",
+								"{{sample_skill}}",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Install skill",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"skill\": \"https://github.com/JarbasSkills/skill-parrot\",\n \"dialog\": \"the parrot skill has been installed\",\n \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?confirm=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills"
+							],
+							"query": [
+								{
+									"key": "confirm",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Uninstall skill",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"skill\": \"skill-parrot.jarbasskills\",\n \"dialog\": \"the parrot skill has been uninstalled\",\n \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?confirm=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"skills"
+							],
+							"query": [
+								{
+									"key": "confirm",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Retrieve information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/info?sort=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"info"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve configuration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/config?sort=true&core=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"config"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "true"
+								},
+								{
+									"key": "core",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sleep status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/sleep",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"sleep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change services log level",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/log?level=info&bus=off",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"log"
+							],
+							"query": [
+								{
+									"key": "level",
+									"value": "info"
+								},
+								{
+									"key": "bus",
+									"value": "off"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sleep mode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"going to sleep\",\"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/sleep?confirm=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"sleep"
+							],
+							"query": [
+								{
+									"key": "confirm",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wake up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"i'm awake\", \"lang\": \"em-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/wakeup?confirm=true",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"wakeup"
+							],
+							"query": [
+								{
+									"key": "confirm",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear TTS cache",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"cache_type\": \"tts\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/cache",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"cache"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reload configuration",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/config",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"system",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Voice",
+			"item": [
+				{
+					"name": "Speak an utterance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"mycroft ai for the win\", \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/voice/speech",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"voice",
+								"speech"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stop current speech",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"mycroft ai for the win\", \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/voice/speech",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"voice",
+								"speech"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mute microphone",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/voice/microphone/mute",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"voice",
+								"microphone",
+								"mute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unmute microphone",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/voice/microphone/unmute",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"voice",
+								"microphone",
+								"unmute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start recording/listening",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/voice/listen",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"voice",
+								"listen"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Network",
+			"item": [
+				{
+					"name": "Retrieve API status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/network/ping",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"network",
+								"ping"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check for internet connectivity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/network/internet",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"network",
+								"internet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check for websocket connectivity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/network/websocket",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"network",
+								"websocket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Generate access and refresh tokens",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"user\": \"{{user}}\",\n    \"password\": \"{{password}}\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/auth/tokens",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"auth",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh access token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/auth/refresh",
+							"protocol": "{{api_protocol}}",
+							"host": [
+								"{{api_address}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"{{api_version}}",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_address",
+			"value": "127.0.0.1"
+		},
+		{
+			"key": "api_port",
+			"value": "8000"
+		},
+		{
+			"key": "api_protocol",
+			"value": "https"
+		},
+		{
+			"key": "api_version",
+			"value": "v1"
+		},
+		{
+			"key": "sample_skill",
+			"value": "mycroft-joke.mycroftai"
+		},
+		{
+			"key": "user",
+			"value": "mycroft",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "change-me",
+			"type": "string"
+		}
+	]
+}
