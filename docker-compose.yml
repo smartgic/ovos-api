@@ -1,0 +1,18 @@
+---
+version: "3.8"
+
+services:
+  mycroft_api:
+    container_name: mycroft_api
+    hostname: mycroft_api
+    restart: unless-stopped
+    image: smartgic/mycroft-api:latest
+    network_mode: host
+    environment:
+      SECRET: C H A N G E - M E
+      WS_HOST: 10.12.50.20
+      WS_PORT: 8181
+      API_KEY: C H A N G E - M E
+      USERS_DB: /users.json
+    volumes:
+      - ./users.json:/users.json:ro
