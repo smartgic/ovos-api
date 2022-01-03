@@ -5,6 +5,8 @@
     <em>Expose a secure REST API on top of Mycroft AI core to perform actions on your instance without to SSH into it.</em>
 </p>
 
+[![Build Status](https://travis-ci.com/smartgic/mycroft-api.svg?branch=main)](https://travis-ci.com/github/smartgic/mycroft-api) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-pink.svg?style=flat)](https://github.com/smartgic/mycroft-api/pulls) [![Discord](https://img.shields.io/discord/809074036733902888)](https://discord.gg/sHM3Duz5d3)
+
 ---
 
 Mycroft API goal is to provide a layer on top of Mycroft AI Core to perform actions such as:
@@ -133,7 +135,7 @@ uvicorn app.api:app --host 10.12.50.21 --port 8000
 | `dev`/`latest`    | Nightly build based on the latest commits applied to the `dev` branch |
 | `stable`          | The latest stable version based on the `main` branch                  |
 
-The `docker-compose.yml` contains variables that will loaded from the `.env` file.
+The `docker-compose.yml` contains variables that will loaded from the `.env` file. As for the users, the file will be mounted as a volume within the container.
 
 ```bash
 cd mycroft-api
