@@ -58,7 +58,7 @@ def encode_refresh_jwt(user: str) -> str:
         payload: dict = {
             "sub": user,
             "exp": datetime.utcnow() + timedelta(
-                days=0, hours=settings.jwt_refresh_expiration),
+                days=0, seconds=settings.jwt_refresh_expiration),
             "iat": datetime.utcnow(),
             "iss": JWT_ISSUER,
             "scope": JWT_SCOPES["refresh"],
