@@ -9,10 +9,10 @@ services:
     image: smartgic/mycroft-api:latest
     network_mode: host
     environment:
-      SECRET: C H A N G E - M E
-      WS_HOST: 10.12.50.20
-      WS_PORT: 8181
-      API_KEY: C H A N G E - M E
-      USERS_DB: /users.json
+      SECRET: ${SECRET}
+      WS_HOST: ${WS_HOST}
+      WS_PORT: ${WS_PORT}
+      API_KEY: ${API_KEY}
+      USERS_DB: ${USERS_DB}
     volumes:
       - ./users.json:/users.json:ro
