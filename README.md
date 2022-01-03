@@ -5,7 +5,8 @@
     <em>Expose a secure REST API on top of Mycroft AI core to perform actions on your instance without to SSH into it.</em>
 </p>
 
-[![Build Status](https://travis-ci.com/smartgic/mycroft-api.svg?branch=main)](https://travis-ci.com/github/smartgic/mycroft-api) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-pink.svg?style=flat)](https://github.com/smartgic/mycroft-api/pulls) [![Discord](https://img.shields.io/discord/809074036733902888)](https://discord.gg/sHM3Duz5d3)
+[![Build Status](https://travis-ci.com/smartgic/mycroft-api.svg?branch=main)](https://travis-ci.com/github/smartgic/mycroft-api) [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/mycroft-api.svg?style=flat&logo=docker&logoColor=FFFFFF&color=87567)](https://hub.docker.com/r/smartgic/mycroft-api)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-pink.svg?style=flat)](https://github.com/smartgic/mycroft-api/pulls) [![Discord](https://img.shields.io/discord/809074036733902888)](https://discord.gg/sHM3Duz5d3)
 
 ---
 
@@ -13,9 +14,9 @@ Mycroft API goal is to provide a layer on top of Mycroft AI Core to perform acti
 
 * Install or uninstall skills
 * Retrieve information *(version, location, name, etc...)*
-* Reload configuration to notify services if a change occured
+* Reload configuration to notify services if a change occurred
 * Delete TTS cache files
-* Microphone mute and unmute *(software)*
+* Microphone mute and un-mute *(software)*
 * Stop any speech or audio output
 * And more!
 
@@ -41,11 +42,11 @@ The `API_KEY` needs to be defined within the `.env` file and this same key must 
   <img src="./docs/flow.png" alt="Mycroft API Flow">
 </p>
 
-To consume the API a user is required, this user will allow to retrive a JSON Web Token *(`JWT`)* using a basic authentication method. Once the authentication has been validated an access and a refresh tokens will be provided.
+To consume the API a user is required, this user will allow to retrieve a JSON Web Token *(`JWT`)* using a basic authentication method. Once the authentication has been validated an access and a refresh tokens will be provided.
 
 # Install
 
-Python virtualenv is always a good practice to keep a clean environment but it is not a mandatory step.
+Python `virtualenv` is always a good practice to keep a clean environment but it is not a mandatory step.
 
 ```bash
 git clone https://github.com/smartgic/mycroft-api.git
@@ -188,7 +189,7 @@ curl -s -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOi
 }
 ```
 
-## Stop speech or audio outpout
+## Stop speech or audio output
 
 ```bash
 curl -s -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteWNyb2Z0IiwiZXhwIjoxNjQxMTY1MDA4LCJpYXQiOjE2NDExNjMyMDgsImlzcyI6Im15Y3JvZnQtYXBpIiwic2NvcGUiOiJhY2Nlc3MifQ.iIXr0NhYo9A5X9xI06UjVWw8FDGm1ZC4AD8fuBFM2mQ" -X DELETE -I http://10.12.50.21:8000/v1/voice/speech 
