@@ -9,15 +9,15 @@
 
 Mycroft API goal is to provide a layer on top of Mycroft AI Core to perform actions such as:
 
-* Install or uninstal skills
+* Install or uninstall skills
 * Retrieve information *(version, location, name, etc...)*
 * Reload configuration to notify services if a change occured
 * Delete TTS cache files
 * Microphone mute and unmute *(software)*
 * Stop any speech or audio output
-* etc...
+* And more!
 
-Here is a quick list of some use cases where the API could be used:
+Here is a quick list of use cases where the API could be used:
 
 * Install or uninstall skills remotely
 * Monitoring and get information
@@ -25,13 +25,13 @@ Here is a quick list of some use cases where the API could be used:
 * Ask for speech from remote sources
 * Connect buttons to trigger actions such as `stop` or `listen`
 * Update skills via an external scheduler
-* etc...
+* The sky is the limit...
 
 # Architecture
 
-In order to interface with Mycroft AI core instance, the API connects to the core messages bus to send and receive messages. Some of the messages used by this API are native to the core such as `stop`, `mycroft.skills.list`, etc... but most of them are custom for the API requirements such as `mycroft.api.skill_settings`, `mycroft.api.websocket`, etc...
+In order to interface with Mycroft AI core instance, the API connects to the core messages bus to send and receive messages. Some messages used by this API are native to the core such as `stop`, `mycroft.skills.list`, etc... but most of the messages used are custom for the API requirements such as `mycroft.api.skill_settings`, `mycroft.api.websocket`, etc...
 
-As mentioned above, the API will send messages to the bus but for non-native messages a skill is required on the core to interpret these messages. This is why [`mycroft-rest-api-skill`](https://github.com/smartgic/mycroft-rest-api-skill) skill should be installed on the core. The API and the skill authenticate via an API key shared between both of them.
+The API will send messages to the bus but for non-native messages a skill is required on the core to interpret these messages. This is why the [`mycroft-rest-api-skill`](https://github.com/smartgic/mycroft-rest-api-skill) skill should be installed on the core. The API and the skill authenticate via an API key shared between both of them.
 
 The `API_KEY` needs to be defined within the `.env` file and this same key must be defined on [home.mycroft.ai](https://home.mycroft.ai) *(see the skill README for more information)*.
 
@@ -39,7 +39,7 @@ The `API_KEY` needs to be defined within the `.env` file and this same key must 
   <img src="./docs/flow.png" alt="Mycroft API Flow">
 </p>
 
-To consume the API a user is required, this user will allow you to retrive a Java Web Token *(JWT)* using a basic authentication method. Once the authentication validated an access and a refresh tokens will be provided.
+To consume the API a user is required, this user will allow to retrive a Java Web Token *(`JWT`)* using a basic authentication method. Once the authentication has been validated an access and a refresh tokens will be provided.
 
 # Install
 
@@ -48,6 +48,7 @@ Python virtualenv is always a good practice to keep a clean environment but it i
 ```bash
 git clone https://github.com/smartgic/mycroft-api.git
 cd mycroft-api
+mkdir ~/virtualenvs
 python -m venv ~/virtualenvs/mycroft-api
 . ~/virtualenvs/mycroft-api/bin/activate
 pip install -r requirements.txt
@@ -55,7 +56,7 @@ pip install -r requirements.txt
 
 # Configuration
 
-Before starting the API. some configuration must be applied to the `.env` file.
+Before starting the API, some configuration must be applied to the `.env` file.
 
 ```ini
 SECRET=""
@@ -90,7 +91,7 @@ The `USERS_DB` should match a path to an existing JSON file that looks like this
 ]
 ```
 
-The `password` field is encrypted using the `passlib[bcrypt]` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password:
+The `password` field is encrypted using the `passlib[bcrypt]` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password asbdemonstrate below.
 
 ```bash
 . ~/virtualenvs/mycroft-api/bin/activate
@@ -99,13 +100,14 @@ python genpass.py --password c-h-a-n-g-e-m-e
 
 ```
 
-The wrapper should return something like this: `$2b$12$USwu6HcOXJV6u0Xpsa/2DOkS5Js8YizdeGUn.NdiYlywx9fUaVp1i`
+The wrapper should return a string like this: `$2b$12$USwu6HcOXJV6u0Xpsa/2DOkS5Js8YizdeGUn.NdiYlywx9fUaVp1i`
 
-# Run
+# Start the API
 
 `uvicorn` *(part of the `requirements.txt` file)* is used to serve the API requests, by default it looks for a `.env` file and if it exists then the variables will be passed to the application.
 
 ```bash
+cd mycroft-api
 uvicorn app.api:app --host 10.12.50.21 --port 8000
 ```
 
@@ -134,18 +136,21 @@ uvicorn app.api:app --host 10.12.50.21 --port 8000
 The `docker-compose.yml` contains variables that will loaded from the `.env` file.
 
 ```bash
+cd mycroft-api
 docker-compose --env-file .env up -d
 ```
 
-This command will download the `smartgic/mycroft-api:latest` Docker image and create the `mycroft_api` Docker container.
+This command will download the `smartgic/mycroft-api:latest` Docker image from Docker Hub and create the `mycroft_api` Docker container.
 
 # Consume the API
 
-To consume the APi you could use different tools from very basic but powerful such as `curl` or something more user friendly like Postman *(a collection is provided)*. Once the API is up and running, you could get the complete list of the available endpoints at http://10.12.50.21:8000/docs *(replace with your IP address and port)*.
+To consume the AP you could use different tools from the very basic but powerful such as `curl` or something more user friendly like Postman *(a collection is provided, more about it below)*. Once the API is up and running, you could get the complete list of the available endpoints at http://10.12.50.21:8000/docs *(replace with your IP address and port)*.
 
 <p align="center">
   <img src="./docs/swagger.png" alt="Mycroft API Swagger">
 </p>
+
+Here are some `curl` examples toe retrieve tokens, information, stop audio output, and more!
 
 ## Retrieve tokens
 
@@ -219,3 +224,5 @@ As previously mentioned, a Postman collection is provided in this repository wit
 </p>
 
 Please follow the [official documentation to import](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman) the Mycroft API Postman collection.
+
+Once the collection has been imported, make sure to update the default variables and to set the right access token.
