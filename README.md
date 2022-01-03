@@ -2,7 +2,7 @@
   <img src="./docs/mycroft-api-logo.png" alt="Mycroft API">
 </p>
 <p align="center">
-    <em>Expose a secure and high performance REST API on top of Mycroft AI core to perform actions on your instance without to SSH into it.</em>
+    <em>Expose a secure REST API on top of Mycroft AI core to perform actions on your instance without to SSH into it.</em>
 </p>
 
 ---
