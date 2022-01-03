@@ -144,7 +144,7 @@ This command will download the `smartgic/mycroft-api:latest` Docker image from D
 
 # Consume the API
 
-To consume the AP you could use different tools from the very basic but powerful such as `curl` or something more user friendly like Postman *(a collection is provided, more about it below)*. Once the API is up and running, you could get the complete list of the available endpoints at http://10.12.50.21:8000/docs *(replace with your IP address and port)*.
+To consume the API you could use different tools from the very basic but powerful such as `curl` or something more user friendly like Postman *(a collection is provided, more about it below)*. Once the API is up and running, you could get the complete list of the available endpoints at http://10.12.50.21:8000/docs *(replace with your IP address and port)*.
 
 <p align="center">
   <img src="./docs/swagger.png" alt="Mycroft API Swagger">
