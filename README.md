@@ -132,8 +132,7 @@ uvicorn app.api:app --host 10.12.50.21 --port 8000
 
 | Tag | Description                                                                         |
 | --  | ---                                                                                 |
-| `dev`/`latest`    | Nightly build based on the latest commits applied to the `dev` branch |
-| `stable`          | The latest stable version based on the `main` branch                  |
+| `stable`/`latest`  | The latest stable version based on the `main` branch                  |
 
 The `docker-compose.yml` contains variables that will loaded from the `.env` file. As for the users, the file will be mounted as a volume within the container.
 
