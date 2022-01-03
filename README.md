@@ -39,7 +39,7 @@ The `API_KEY` needs to be defined within the `.env` file and this same key must 
   <img src="./docs/flow.png" alt="Mycroft API Flow">
 </p>
 
-To consume the API a user is required, this user will allow to retrive a Java Web Token *(`JWT`)* using a basic authentication method. Once the authentication has been validated an access and a refresh tokens will be provided.
+To consume the API a user is required, this user will allow to retrive a JSON Web Token *(`JWT`)* using a basic authentication method. Once the authentication has been validated an access and a refresh tokens will be provided.
 
 # Install
 
@@ -91,7 +91,7 @@ The `USERS_DB` should match a path to an existing JSON file that looks like this
 ]
 ```
 
-The `password` field is encrypted using the `passlib[bcrypt]` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password asbdemonstrate below.
+The `password` field is encrypted using the `passlib[bcrypt]` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password as demonstrated below.
 
 ```bash
 . ~/virtualenvs/mycroft-api/bin/activate
@@ -217,7 +217,7 @@ curl -s -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOi
 
 # Postman
 
-As previously mentioned, a Postman collection is provided in this repository with a list of multiple requests.
+As previously mentioned, a Postman collection is provided in this repository under the `postman` directory with a list of multiple requests.
 
 <p align="center">
   <img src="./docs/postman.png" alt="Mycroft API Postman collection">
