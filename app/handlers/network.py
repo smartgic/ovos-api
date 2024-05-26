@@ -1,5 +1,6 @@
 """Handles network requirements
 """
+
 from random import choice
 from typing import List
 from fastapi import HTTPException, status
@@ -25,13 +26,14 @@ def ping() -> JSONStructure:
             "Guo Yue",
             "Xu Xin",
             "Wang Liqin",
-            "Ma Long"
+            "Ma Long",
         ]
         return {"pong": choice(players)}
     except Exception as err:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to retrieve the api status") from err
+            detail="unable to retrieve the api status",
+        ) from err
 
 
 def internet() -> JSONStructure:
@@ -44,26 +46,23 @@ def internet() -> JSONStructure:
     msg: str = "unable to retrieve the connectivity status"
     try:
         payload = {
-            "type": "mycroft.api.internet",
+            "type": "ovos.api.internet",
             "data": {
                 "app_key": settings.app_key,
-            }
+            },
         }
         if requirements():
-            internet: JSONStructure = ws_send(
-                payload, "mycroft.api.internet.answer")
+            internet: JSONStructure = ws_send(payload, "ovos.api.internet.answer")
             if internet["context"]["authenticated"]:
-                return {"connected": internet["data"]}
+                return {"connected": internet["data"]["status"]}
             status_code = status.HTTP_401_UNAUTHORIZED
-            msg = "unable to authenticate with mycroft-api skill"
+            msg = "unable to authenticate with skill-rest-api"
             raise Exception
         status_code = status.HTTP_401_UNAUTHORIZED
-        msg = "mycroft-api skill is not installed on mycroft core"
+        msg = "skill-rest-api is not installed on ovos core"
         raise Exception
     except Exception as err:
-        raise HTTPException(
-            status_code=status_code,
-            detail=msg) from err
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def websocket() -> JSONStructure:
@@ -76,23 +75,20 @@ def websocket() -> JSONStructure:
     msg: dict = {"listening": False}
     try:
         payload = {
-            "type": "mycroft.api.websocket",
+            "type": "ovos.api.websocket",
             "data": {
                 "app_key": settings.app_key,
-            }
+            },
         }
         if requirements():
-            websocket: JSONStructure = ws_send(
-                payload, "mycroft.api.websocket.answer")
+            websocket: JSONStructure = ws_send(payload, "ovos.api.websocket.answer")
             if websocket["context"]["authenticated"]:
                 return {"listening": websocket["data"]["listening"]}
             status_code = status.HTTP_401_UNAUTHORIZED
-            msg = "unable to authenticate with mycroft-api skill"
+            msg = "unable to authenticate with skill-rest-api"
             raise Exception
         status_code = status.HTTP_401_UNAUTHORIZED
-        msg = "mycroft-api skill is not installed on mycroft core"
+        msg = "skill-rest-api is not installed on ovos core"
         raise Exception
     except Exception as err:
-        raise HTTPException(
-            status_code=status_code,
-            detail=msg) from err
+        raise HTTPException(status_code=status_code, detail=msg) from err

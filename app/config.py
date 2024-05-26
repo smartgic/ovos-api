@@ -1,8 +1,9 @@
 """Configuration file for the application behavior
 """
+
 from base64 import b64encode
 from functools import lru_cache
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from decouple import config
 
 
@@ -10,13 +11,14 @@ class Settings(BaseSettings):
     """Class that host the application options.
     All the variables ara casted by Pydantic.
     """
-    app_name: str = "Mycroft AI API"
+
+    app_name: str = "Open Voice OS API"
     app_version: str = "1.0.0"
     app_key: str = b64encode(config("API_KEY").encode("utf-8"))
     cryto_scheme: str = "bcrypt"
     users_db: str = config("USERS_DB")
     prefix_version: str = "/v1"
-    ws_uri: str = f'ws://{config("WS_HOST")}:{config("WS_PORT")}/core'
+    ws_uri: str = f'ws://{config("WS_HOST", "127.0.0.1")}:{config("WS_PORT", 8181)}/core'
     ws_conn_timeout: int = 10
     ws_recv_timeout: int = 5
     jwt_algorithm: str = "HS256"

@@ -1,6 +1,7 @@
+argparse
+bcrypt
 fastapi
-uvicorn
+pydantic-settings
 pyjwt
-passlib[bcrypt]
 python-decouple
 websocket-client

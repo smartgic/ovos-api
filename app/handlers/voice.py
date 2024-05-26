@@ -1,5 +1,6 @@
 """Handles voice requirements
 """
+
 from typing import Dict
 from fastapi import HTTPException, status
 from app.common.typing import JSONStructure
@@ -23,21 +24,19 @@ def speaking(speak: Speak) -> JSONStructure:
     try:
         payload: Dict = {
             "type": "speak",
-            "data": {
-                "utterance": speak.utterance,
-                "lang": speak.lang
-            }
+            "data": {"utterance": speak.utterance, "lang": speak.lang},
         }
         ws_send(payload)
         return payload["data"]
     except Exception as err:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to send the utterance") from err
+            detail="unable to send the utterance",
+        ) from err
 
 
 def stop() -> JSONStructure:
-    """Send a stop speech request to Mycroft
+    """Send a stop speech request to Open Voice OS
 
     Send `mycroft.stop` message to the bus to stop the speech.
 
@@ -45,20 +44,18 @@ def stop() -> JSONStructure:
     :rtype: int
     """
     try:
-        payload: Dict = {
-            "type": "mycroft.stop"
-        }
+        payload: Dict = {"type": "mycroft.stop"}
         ws_send(payload)
         return status.HTTP_204_NO_CONTENT
     except Exception as err:
         print(err)
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to stop the speech") from err
+            status_code=status.HTTP_400_BAD_REQUEST, detail="unable to stop the speech"
+        ) from err
 
 
 def mute() -> JSONStructure:
-    """Send a microphone mute request to Mycroft
+    """Send a microphone mute request to Open Voice OS
 
     Send `mycroft.mic.mute` message to the bus to mute the microphone.
 
@@ -66,20 +63,18 @@ def mute() -> JSONStructure:
     :rtype: int
     """
     try:
-        payload: Dict = {
-            "type": "mycroft.mic.mute"
-        }
+        payload: Dict = {"type": "mycroft.mic.mute"}
         ws_send(payload)
         return status.HTTP_204_NO_CONTENT
     except Exception as err:
         print(err)
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to mute microphone") from err
+            status_code=status.HTTP_400_BAD_REQUEST, detail="unable to mute microphone"
+        ) from err
 
 
 def unmute() -> JSONStructure:
-    """Send a microphone unmute request to Mycroft
+    """Send a microphone unmute request to Open Voice OS
 
     Send `mycroft.mic.unmute` message to the bus to unmute the microphone.
 
@@ -87,20 +82,19 @@ def unmute() -> JSONStructure:
     :rtype: int
     """
     try:
-        payload: Dict = {
-            "type": "mycroft.mic.unmute"
-        }
+        payload: Dict = {"type": "mycroft.mic.unmute"}
         ws_send(payload)
         return status.HTTP_204_NO_CONTENT
     except Exception as err:
         print(err)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to unmute microphone") from err
+            detail="unable to unmute microphone",
+        ) from err
 
 
 def listen() -> JSONStructure:
-    """Send a recording request to Mycroft
+    """Send a recording request to Open Voice OS
 
     Send `mycroft.mic.listen` message to the bus to start the recording.
 
@@ -108,13 +102,12 @@ def listen() -> JSONStructure:
     :rtype: int
     """
     try:
-        payload: Dict = {
-            "type": "mycroft.mic.listen"
-        }
+        payload: Dict = {"type": "mycroft.mic.listen"}
         ws_send(payload)
         return status.HTTP_204_NO_CONTENT
     except Exception as err:
         print(err)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to start the recording") from err
+            detail="unable to start the recording",
+        ) from err

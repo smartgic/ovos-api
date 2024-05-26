@@ -1,18 +1,19 @@
 """Models related to system
 """
+
 from typing import Any
 from pydantic import BaseModel
 
 
 class Cache(BaseModel):
-    """Model for cache POST action
-    """
+    """Model for cache POST action"""
+
     cache_type: str
 
 
 class Info(BaseModel):
-    """Model information
-    """
+    """Model information"""
+
     core_version: str
     platform: str
     lang: str
@@ -25,18 +26,18 @@ class Info(BaseModel):
 
 
 class InfoResults(BaseModel):
-    """Model information output
-    """
+    """Model information output"""
+
     results: Info
 
 
 class Config(BaseModel):
-    """Model configuration output
-    """
+    """Model configuration output"""
+
     key: Any
 
 
 class ConfigResults(BaseModel):
-    """Model configuration output
-    """
+    """Model configuration output"""
+
     results: Config

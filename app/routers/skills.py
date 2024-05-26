@@ -20,7 +20,7 @@ settings = get_settings()
     response_model=Skills,
     summary="Collect a complete list of installed skills",
     description="Send `skillmanager.list` message to the bus and wait \
-        for `mycroft.skills.list` response",
+        for `ovos.skill.list` response",
     response_description="Retrieved skill list",
     dependencies=[Depends(JWTBearer())])
 @router.get(

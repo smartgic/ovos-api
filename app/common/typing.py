@@ -1,5 +1,6 @@
 """Add some custom Pydantic typing
 """
+
 from typing import Any, Dict, AnyStr, List, Union
 
 # {"key": 1} or {"key": "value"} or {"key": {}}, etc...

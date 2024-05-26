@@ -1,5 +1,6 @@
 """Super class of HTTPBearer from FastAPI to handle Bearer token
 """
+
 from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import Request, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -10,20 +11,28 @@ settings = get_settings()
 
 
 class JWTBearer(HTTPBearer):
-    """Override HTTPBearer class
-    """
+    """Override HTTPBearer class"""
+
     def __init__(self, auto_error: bool = False):
-        super().__init__(auto_error=auto_error)
+        super(JWTBearer, self).__init__(auto_error=auto_error)
 
     async def __call__(self, request: Request):
-        creds: HTTPAuthorizationCredentials = await super().__call__(request)
-
+        creds: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(
+            request
+        )
         if creds:
             if not creds.scheme == "Bearer":
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="invalid authentication scheme")
-            self.verify_access_jwt(creds.credentials)
+                    detail="invalid authentication scheme",
+                )
+            if not self.verify_access_jwt(creds.credentials):
+                raise HTTPException(
+                    status_code=403, detail="invalid token or expired token"
+                )
+        else:
+            raise HTTPException(status_code=403, detail="invalid authorization code")
+            # self.verify_access_jwt(creds.credentials)
 
     @classmethod
     def verify_access_jwt(cls, jwt_token: str) -> bool:
@@ -44,15 +53,16 @@ class JWTBearer(HTTPBearer):
                 return True
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="invalid scope for token")
+                detail="invalid scope for token",
+            )
         except ExpiredSignatureError:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="access token expired")
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="access token expired"
+            )
         except InvalidTokenError:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="invalid access token")
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid access token"
+            )
 
     @classmethod
     def verify_refresh_jwt(cls, jwt_token: str) -> bool:
@@ -73,12 +83,13 @@ class JWTBearer(HTTPBearer):
                 return True
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="invalid scope for token")
+                detail="invalid scope for token",
+            )
         except ExpiredSignatureError:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="refresh token expired")
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="refresh token expired"
+            )
         except InvalidTokenError:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="invalid refresh token")
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid refresh token"
+            )

@@ -1,5 +1,6 @@
 """Handles skills requirements
 """
+
 import json
 from typing import Optional, Dict
 from fastapi import HTTPException, status
@@ -32,7 +33,7 @@ def retrieve_list(sort: Optional[bool] = False) -> Skills:
         active: int = 0
         inactive: int = 0
         for key in skills["data"]:
-            if skills["data"][key]['active']:
+            if skills["data"][key]["active"]:
                 active = active + 1
             else:
                 inactive = inactive + 1
@@ -48,7 +49,8 @@ def retrieve_list(sort: Optional[bool] = False) -> Skills:
     except Exception as err:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to retrieve skill list") from err
+            detail="unable to retrieve skill list",
+        ) from err
 
 
 def retrieve_settings(skill_id: str) -> JSONStructure:
@@ -67,16 +69,14 @@ def retrieve_settings(skill_id: str) -> JSONStructure:
     try:
         skills: Skills = retrieve_list()
         for key in skills["results"]:
-            if skills["results"][key]['id'] == skill_id:
+            if skills["results"][key]["id"] == skill_id:
                 payload: Dict = {
                     "type": "mycroft.api.skill_settings",
-                    "data": {
-                        "app_key": settings.app_key,
-                        "skill": skill_id
-                    }
+                    "data": {"app_key": settings.app_key, "skill": skill_id},
                 }
                 info: JSONStructure = ws_send(
-                    payload, "mycroft.api.skill_settings.answer")
+                    payload, "mycroft.api.skill_settings.answer"
+                )
                 if requirements():
                     if info["context"]["authenticated"]:
                         return sanitize({"results": info["data"]})
@@ -90,9 +90,7 @@ def retrieve_settings(skill_id: str) -> JSONStructure:
         msg = f"skill {skill_id} not found"
         raise Exception
     except Exception as err:
-        raise HTTPException(
-            status_code=status_code,
-            detail=msg) from err
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def deactivate(skill_id: str) -> int:
@@ -108,20 +106,18 @@ def deactivate(skill_id: str) -> int:
     try:
         skills: JSONStructure = retrieve_list()
         for key in skills["results"]:
-            if skills["results"][key]['id'] == skill_id:
+            if skills["results"][key]["id"] == skill_id:
                 payload = {
                     "type": "skillmanager.deactivate",
-                    "data": {
-                        "skill": skill_id
-                    }
+                    "data": {"skill": skill_id},
                 }
                 ws_send(payload)
                 return status.HTTP_204_NO_CONTENT
         return status.HTTP_400_BAD_REQUEST
     except Exception as err:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to deactivate skill") from err
+            status_code=status.HTTP_400_BAD_REQUEST, detail="unable to deactivate skill"
+        ) from err
 
 
 def activate(skill_id: str) -> int:
@@ -137,20 +133,18 @@ def activate(skill_id: str) -> int:
     try:
         skills: JSONStructure = retrieve_list()
         for key in skills["results"]:
-            if skills["results"][key]['id'] == skill_id:
+            if skills["results"][key]["id"] == skill_id:
                 payload: Dict = {
                     "type": "skillmanager.activate",
-                    "data": {
-                        "skill": skill_id
-                    }
+                    "data": {"skill": skill_id},
                 }
                 ws_send(payload)
                 return status.HTTP_204_NO_CONTENT
         return status.HTTP_400_BAD_REQUEST
     except Exception as err:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to activate skill") from err
+            status_code=status.HTTP_400_BAD_REQUEST, detail="unable to activate skill"
+        ) from err
 
 
 def update() -> int:
@@ -161,15 +155,13 @@ def update() -> int:
     :rtype: int
     """
     try:
-        payload = {
-            "type": "skillmanager.update"
-        }
+        payload = {"type": "skillmanager.update"}
         ws_send(payload)
         return status.HTTP_204_NO_CONTENT
     except Exception as err:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="unable to update skills") from err
+            status_code=status.HTTP_400_BAD_REQUEST, detail="unable to update skills"
+        ) from err
 
 
 def install(skill: Install, confirm: Optional[bool] = False) -> Install:
@@ -185,11 +177,7 @@ def install(skill: Install, confirm: Optional[bool] = False) -> Install:
     status_code: int = status.HTTP_400_BAD_REQUEST
     msg: str = "unable to install the skill"
     try:
-        data: Install = Install(
-            skill=skill.skill,
-            dialog=skill.dialog,
-            lang=skill.lang
-        )
+        data: Install = Install(skill=skill.skill, dialog=skill.dialog, lang=skill.lang)
         payload: Dict = {
             "type": "mycroft.api.skill_install",
             "data": {
@@ -197,12 +185,11 @@ def install(skill: Install, confirm: Optional[bool] = False) -> Install:
                 "skill": data.skill,
                 "confirm": confirm,
                 "dialog": data.dialog,
-                "lang": data.lang
-            }
+                "lang": data.lang,
+            },
         }
         if requirements():
-            skill: JSONStructure = ws_send(
-                payload, "mycroft.api.skill_install.answer")
+            skill: JSONStructure = ws_send(payload, "mycroft.api.skill_install.answer")
             if skill["context"]["authenticated"]:
                 return skill["data"]
             status_code = status.HTTP_401_UNAUTHORIZED
@@ -212,9 +199,7 @@ def install(skill: Install, confirm: Optional[bool] = False) -> Install:
         msg = "mycroft-api skill is not installed on mycroft core"
         raise Exception
     except Exception as err:
-        raise HTTPException(
-            status_code=status_code,
-            detail=msg) from err
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def uninstall(skill: Uninstall, confirm: Optional[bool] = False) -> Uninstall:
@@ -231,9 +216,7 @@ def uninstall(skill: Uninstall, confirm: Optional[bool] = False) -> Uninstall:
     msg: str = "unable to uninstall the skill"
     try:
         data: Uninstall = Uninstall(
-            skill=skill.skill,
-            dialog=skill.dialog,
-            lang=skill.lang
+            skill=skill.skill, dialog=skill.dialog, lang=skill.lang
         )
         payload: Dict = {
             "type": "mycroft.api.skill_uninstall",
@@ -242,18 +225,19 @@ def uninstall(skill: Uninstall, confirm: Optional[bool] = False) -> Uninstall:
                 "skill": data.skill,
                 "confirm": confirm,
                 "dialog": data.dialog,
-                "lang": data.lang
-            }
+                "lang": data.lang,
+            },
         }
         if requirements():
             skills: JSONStructure = retrieve_list()
             for key in skills["results"]:
                 if (
-                    skills["results"][key]['id'] == data.skill and
-                    skills["results"][key]['id'] != API_SKILL_ID
-                   ):
+                    skills["results"][key]["id"] == data.skill
+                    and skills["results"][key]["id"] != API_SKILL_ID
+                ):
                     skill: JSONStructure = ws_send(
-                        payload, "mycroft.api.skill_uninstall.answer")
+                        payload, "mycroft.api.skill_uninstall.answer"
+                    )
                     if skill["context"]["authenticated"]:
                         return skill["data"]
                     status_code = status.HTTP_401_UNAUTHORIZED
@@ -266,6 +250,4 @@ def uninstall(skill: Uninstall, confirm: Optional[bool] = False) -> Uninstall:
         msg = "mycroft-api skill is not installed on mycroft core"
         raise Exception
     except Exception as err:
-        raise HTTPException(
-            status_code=status_code,
-            detail=msg) from err
+        raise HTTPException(status_code=status_code, detail=msg) from err

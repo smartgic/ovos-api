@@ -1,11 +1,14 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import argparse
-from passlib.context import CryptContext
+import bcrypt
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--password', type=str, required=True)
+parser.add_argument("--password", type=str, required=True)
 args = parser.parse_args()
 
-hasher = CryptContext(schemes=['bcrypt'])
-print(hasher.hash(args.password))
+salt = bcrypt.gensalt(rounds=12)
+password = args.password.encode("utf-8")
+hasher = bcrypt.hashpw(password=password, salt=salt).decode("utf-8")
+
+print(hasher)

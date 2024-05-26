@@ -1,5 +1,6 @@
 """Network routes
 """
+
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from app.models.network import Pong, Internet, Websocket
@@ -7,9 +8,7 @@ from app.config import get_settings
 from app.auth.bearer import JWTBearer
 from app.handlers import network
 
-router = APIRouter(
-    prefix="/network",
-    tags=["network"])
+router = APIRouter(prefix="/network", tags=["network"])
 
 settings = get_settings()
 
@@ -20,7 +19,8 @@ settings = get_settings()
     status_code=status.HTTP_201_CREATED,
     summary="Get the API status",
     description="Send a request to monitor the API",
-    response_description="API status")
+    response_description="API status",
+)
 async def ping() -> JSONResponse:
     """Get the API status
 
@@ -37,7 +37,8 @@ async def ping() -> JSONResponse:
     summary="Get Internet connection status",
     description="Check for internet connectivity",
     response_description="Connectivity status",
-    dependencies=[Depends(JWTBearer())],)
+    dependencies=[Depends(JWTBearer())],
+)
 async def internet() -> JSONResponse:
     """Get Internet connection status
 
@@ -54,7 +55,8 @@ async def internet() -> JSONResponse:
     summary="Get websocket connection status",
     description="Check for websocket connectivity",
     response_description="Connectivity status",
-    dependencies=[Depends(JWTBearer())],)
+    dependencies=[Depends(JWTBearer())],
+)
 async def websocket() -> JSONResponse:
     """Get websocket connection status
 

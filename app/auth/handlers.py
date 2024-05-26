@@ -1,12 +1,14 @@
 """Handlers for JWT authentication
 """
+
+import bcrypt
 import json
-from pathlib import Path
-from passlib.context import CryptContext
-from datetime import datetime, timedelta
-from jwt import encode, decode, DecodeError, InvalidSignatureError
 from app.config import get_settings
 from app.common.constants import JWT_SCOPES, JWT_ISSUER
+from datetime import datetime, timedelta
+from jwt import encode, decode, DecodeError, InvalidSignatureError
+from pathlib import Path
+
 
 settings = get_settings()
 
@@ -26,8 +28,8 @@ def encode_access_jwt(user: str) -> str:
         # Follow the RFC: https://datatracker.ietf.org/doc/html/rfc7519
         payload: dict = {
             "sub": user,
-            "exp": datetime.utcnow() + timedelta(
-                days=0, seconds=settings.jwt_access_expiration),
+            "exp": datetime.utcnow()
+            + timedelta(days=0, seconds=settings.jwt_access_expiration),
             "iat": datetime.utcnow(),
             "iss": JWT_ISSUER,
             "scope": JWT_SCOPES["access"],
@@ -35,8 +37,7 @@ def encode_access_jwt(user: str) -> str:
         # Encode the payload based on options from config.py
         #  - jwt_secret
         #  - jwt_algorithm
-        token = encode(payload, settings.jwt_secret,
-                       algorithm=settings.jwt_algorithm)
+        token = encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
         return token
     except InvalidSignatureError as err:
         return err
@@ -57,8 +58,8 @@ def encode_refresh_jwt(user: str) -> str:
         # Follow the RFC: https://datatracker.ietf.org/doc/html/rfc7519
         payload: dict = {
             "sub": user,
-            "exp": datetime.utcnow() + timedelta(
-                days=0, seconds=settings.jwt_refresh_expiration),
+            "exp": datetime.utcnow()
+            + timedelta(days=0, seconds=settings.jwt_refresh_expiration),
             "iat": datetime.utcnow(),
             "iss": JWT_ISSUER,
             "scope": JWT_SCOPES["refresh"],
@@ -66,8 +67,7 @@ def encode_refresh_jwt(user: str) -> str:
         # Encode the payload based on options from config.py
         #  - jwt_secret
         #  - jwt_algorithm
-        token = encode(payload, settings.jwt_secret,
-                       algorithm=settings.jwt_algorithm)
+        token = encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
         return token
     except InvalidSignatureError as err:
         return err
@@ -82,8 +82,7 @@ def decode_jwt(token: str) -> str:
     :rtype: str
     """
     try:
-        token = decode(token, settings.jwt_secret,
-                       algorithms=[settings.jwt_algorithm])
+        token = decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
         return token
     except DecodeError as err:
         return err
@@ -100,7 +99,7 @@ def refresh_jwt(token: str) -> str:
     try:
         payload: dict = decode_jwt(token)
         if payload["scope"] == "refresh":
-            return encode_access_jwt(payload['sub'])
+            return encode_access_jwt(payload["sub"])
         return False
     except DecodeError as err:
         return err
@@ -145,5 +144,8 @@ def verify_password(clear_password: str, hash_password: str) -> bool:
     :return: Return verify status as boolean
     :rtype: bool
     """
-    hasher = CryptContext(schemes=[settings.cryto_scheme])
-    return hasher.verify(clear_password, hash_password)
+
+    return bcrypt.checkpw(
+        password=clear_password.encode("utf-8"),
+        hashed_password=hash_password.encode("utf-8"),
+    )

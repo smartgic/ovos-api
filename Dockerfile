@@ -2,11 +2,11 @@ FROM python:3.10
 
 LABEL vendor=Smartgic.io \
   io.smartgic.maintainer="Gaëtan Trellu <gaetan.trellu@smartgic.io>" \
-  io.smartgic.image-name="mycroft-api" \
+  io.smartgic.image-name="ovos-api" \
   io.smartgic.is-beta="no" \
   io.smartgic.is-production="yes" \
   io.smartgic.version="${TAG}" \
-  io.smartgic.release-date="2021-12-30"
+  io.smartgic.release-date="2024-05-26"
 
 EXPOSE 8000
 
