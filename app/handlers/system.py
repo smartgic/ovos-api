@@ -14,42 +14,38 @@ from app.handlers.voice import speaking
 settings = get_settings()
 
 
-# def get_info(sort: Optional[bool] = False) -> InfoResults:
-#     """Retrieves system information by leveraging the mycroft-api skill
+def get_info(sort: Optional[bool] = False) -> InfoResults:
+    """Retrieves system information by leveraging the skill-rest-api
 
-#     Send `"mycroft.api.info` message and wait for `mycroft.api.info.answer`
-#     message to appear on the bus.
+    Send `"ovos.api.info` message and wait for `ovos.api.info.answer`
+    message to appear on the bus.
 
-#     :param sort: Sort alphabetically the information
-#     :type sort: bool, optional
-#     :return: Return information
-#     :rtype: InfoResults
-#     """
-#     status_code: int = status.HTTP_400_BAD_REQUEST
-#     msg: str = "unable to retrieve system information"
-#     try:
-#         payload: Dict = {
-#             "type": "mycroft.api.info",
-#             "data": {
-#                 "app_key": settings.app_key
-#             }
-#         }
-#         if requirements():
-#             info: JSONStructure = ws_send(payload, "mycroft.api.info.answer")
-#             if info["context"]["authenticated"]:
-#                 if sort:
-#                     info = json.loads(json.dumps(info, sort_keys=True))
-#                 return {"results": info["data"]}
-#             status_code = status.HTTP_401_UNAUTHORIZED
-#             msg = "unable to authenticate with mycroft-api skill"
-#             raise Exception
-#         status_code = status.HTTP_401_UNAUTHORIZED
-#         msg = "mycroft-api skill is not installed on mycroft core"
-#         raise Exception
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status_code,
-#             detail=msg) from err
+    :param sort: Sort alphabetically the information
+    :type sort: bool, optional
+    :return: Return information
+    :rtype: InfoResults
+    """
+    status_code: int = status.HTTP_400_BAD_REQUEST
+    msg: str = "unable to retrieve system information"
+    try:
+        payload: Dict = {
+            "type": "ovos.api.info",
+            "data": {"app_key": settings.app_key},
+        }
+        if requirements():
+            info: JSONStructure = ws_send(payload, "ovos.api.info.answer")
+            if info["context"]["authenticated"]:
+                if sort:
+                    info = json.loads(json.dumps(info, sort_keys=True))
+                return {"results": info["data"]}
+            status_code = status.HTTP_401_UNAUTHORIZED
+            msg = "unable to authenticate with skill-rest-api"
+            raise Exception
+        status_code = status.HTTP_401_UNAUTHORIZED
+        msg = "skill-rest-api is not installed on ovos core"
+        raise Exception
+    except Exception as err:
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 # def get_config(sort: Optional[bool] = False,
@@ -112,21 +108,19 @@ settings = get_settings()
 #     try:
 #         payload: Dict = {
 #             "type": "mycroft.debug.log",
-#             "data": {
-#                 "level": level,
-#                 "bus": bus
-#             }
+#             "data": {"level": level, "bus": bus},
 #         }
 #         ws_send(payload)
 #         return status.HTTP_204_NO_CONTENT
 #     except Exception as err:
 #         raise HTTPException(
 #             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="unable to change the services log level") from err
+#             detail="unable to change the services log level",
+#         ) from err
 
 
 def sleep(confirm: Optional[bool] = True, dialog: Optional[Speak] = None) -> Speak:
-    """Put Mycroft into sleep mode
+    """Put OVOS into sleep mode
 
     Send `recognizer_loop:sleep` message to the bus.
 
@@ -155,14 +149,14 @@ def sleep(confirm: Optional[bool] = True, dialog: Optional[Speak] = None) -> Spe
             msg = "unable to authenticate with skill-rest-api"
             raise Exception
         status_code = status.HTTP_401_UNAUTHORIZED
-        msg = "mycroft-api skill is not installed on ovos core"
+        msg = "skill-rest-api is not installed on ovos core"
         raise Exception
     except Exception as err:
         raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def wake_up(confirm: Optional[bool] = True, dialog: Optional[Speak] = None) -> Speak:
-    """Wake up Mycroft from sleep mode
+    """Wake up OVOS from sleep mode
 
     Send `recognizer_loop:wake_up` message to the bus.
 
@@ -191,13 +185,13 @@ def wake_up(confirm: Optional[bool] = True, dialog: Optional[Speak] = None) -> S
             msg = "unable to authenticate with skill-rest-api"
             raise Exception
         status_code = status.HTTP_401_UNAUTHORIZED
-        msg = "mycroft-api skill is not installed on ovos core"
+        msg = "skill-rest-api is not installed on ovos core"
     except Exception as err:
         raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def is_awake() -> JSONStructure:
-    """Retrieve sleep mode status by leveraging the mycroft-api skill
+    """Retrieve sleep mode status by leveraging the skill-rest-api
 
     Send `mycroft.api.is_awake` message and wait for
     `mycroft.api.is_awake.answer` message to appear on the bus.
@@ -220,47 +214,40 @@ def is_awake() -> JSONStructure:
             msg = "unable to authenticate with skill-rest-api"
             raise Exception
         status_code = status.HTTP_401_UNAUTHORIZED
-        msg = "mycroft-api skill is not installed on ovos core"
+        msg = "skill-rest-api is not installed on ovos core"
         raise Exception
     except Exception as err:
         raise HTTPException(status_code=status_code, detail=msg) from err
 
 
-# def caching(cache: Cache) -> Cache:
-#     """Delete cached files by leveraging the mycroft-api skill
+def caching(cache: Cache) -> JSONStructure:
+    """Delete cached files by leveraging the kill-rest-api
 
-#     Send `mycroft.api.cache` message to the bus.
+    Send `ovos.api.cache` message to the bus.
 
-#     :return: Return deleted cache type
-#     :rtype: dict
-#     """
-#     status_code: int = status.HTTP_400_BAD_REQUEST
-#     msg: str = "unable to clear cache"
-#     try:
-#         data: Cache = Cache(
-#             cache_type=cache.cache_type
-#         )
-#         payload: Dict = {
-#             "type": "mycroft.api.cache",
-#             "data": {
-#                 "app_key": settings.app_key,
-#                 "cache_type": data.cache_type
-#             }
-#         }
-#         if requirements():
-#             cache: JSONStructure = ws_send(payload, "mycroft.api.cache.answer")
-#             if cache["context"]["authenticated"]:
-#                 return cache["data"]
-#             status_code = status.HTTP_401_UNAUTHORIZED
-#             msg = "unable to authenticate with mycroft-api skill"
-#             raise Exception
-#         status_code = status.HTTP_401_UNAUTHORIZED
-#         msg = "mycroft-api skill is not installed on mycroft core"
-#         raise Exception
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status_code,
-#             detail=msg) from err
+    :return: Return deleted cache type
+    :rtype: dict
+    """
+    status_code: int = status.HTTP_400_BAD_REQUEST
+    msg: str = "unable to clear cache"
+    try:
+        data: Cache = Cache(cache_type=cache.cache_type)
+        payload: Dict = {
+            "type": "ovos.api.cache",
+            "data": {"app_key": settings.app_key, "cache_type": data.cache_type},
+        }
+        if requirements():
+            cache: JSONStructure = ws_send(payload, "ovos.api.cache.answer")
+            if cache["context"]["authenticated"]:
+                return cache["data"]
+            status_code = status.HTTP_401_UNAUTHORIZED
+            msg = "unable to authenticate with skill-rest-api"
+            raise Exception
+        status_code = status.HTTP_401_UNAUTHORIZED
+        msg = "skill-rest-api is not installed on ovos core"
+        raise Exception
+    except Exception as err:
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 # def reload_config() -> int:

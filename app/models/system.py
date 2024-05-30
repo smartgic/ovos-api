@@ -11,18 +11,26 @@ class Cache(BaseModel):
     cache_type: str
 
 
-class Info(BaseModel):
-    """Model information"""
-
-    core_version: str
-    platform: str
-    lang: str
-    tts_engine: str
-    audio_backend: str
-    name: str
+class InfoLocales(BaseModel):
     city: str
     country: str
     timezone: str
+    lang: str
+
+
+class InfoSystem(BaseModel):
+    architecture: str
+    os: str
+    kernel: str
+
+class Info(BaseModel):
+    """Model information"""
+    name: str
+    core_version: str
+    tts_engine: str
+    locales: InfoLocales
+    log_level: str
+    system: InfoSystem
 
 
 class InfoResults(BaseModel):

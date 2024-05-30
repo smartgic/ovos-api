@@ -1,16 +1,13 @@
 <p align="center">
-  <img src="./docs/mycroft-api-logo.png" alt="Mycroft API">
-</p>
-<p align="center">
-    <em>Expose a secure REST API on top of Mycroft AI core to perform actions on your instance without to SSH into it.</em>
+    <em>Expose a secure REST API on top of Open Voice OS core to perform actions on your instance without to SSH into it.</em>
 </p>
 
-[![Build Status](https://travis-ci.com/smartgic/mycroft-api.svg?branch=main)](https://travis-ci.com/github/smartgic/mycroft-api) [![Docker pulls](https://img.shields.io/docker/pulls/smartgic/mycroft-api.svg?style=flat&logo=docker&logoColor=FFFFFF&color=87567)](https://hub.docker.com/r/smartgic/mycroft-api)
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-pink.svg?style=flat)](https://github.com/smartgic/mycroft-api/pulls) [![Discord](https://img.shields.io/discord/809074036733902888)](https://discord.gg/sHM3Duz5d3)
+[![Docker pulls](https://img.shields.io/docker/pulls/smartgic/mycroft-api.svg?style=flat&logo=docker&logoColor=FFFFFF&color=87567)](https://hub.docker.com/r/smartgic/mycroft-api)
+ [![License: Apache 2.0](https://img.shields.io/badge/License-Apache2.0-yellow.svg)](https://opensource.org/license/apache-2-0) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-pink.svg?style=flat)](https://github.com/smartgic/mycroft-api/pulls) [![Discord](https://img.shields.io/discord/809074036733902888)](https://discord.gg/sHM3Duz5d3)
 
 ---
 
-Mycroft API goal is to provide a layer on top of Mycroft AI Core to perform actions such as:
+OVOS API goal is to provide a layer on top of Open Voice OS Core to perform actions such as:
 
 * Install or uninstall skills
 * Retrieve information *(version, location, name, etc...)*
@@ -32,9 +29,9 @@ Here is a quick list of use cases where the API could be used:
 
 # Architecture
 
-In order to interface with Mycroft AI core instance, the API connects to the core messages bus to send and receive messages. Some messages used by this API are native to the core such as `stop`, `mycroft.skills.list`, etc... but most of the messages used are custom for the API requirements such as `mycroft.api.skill_settings`, `mycroft.api.websocket`, etc...
+In order to interface with Open Voice OS core instance, the API connects to the core messages bus to send and receive messages. Some messages used by this API are native to the core such as `stop`, `mycroft.skills.list`, etc... but most of the messages used are custom for the API requirements such as `ovos.api.skill_settings`, `ovos.api.websocket`, etc...
 
-The API will send messages to the bus but for non-native messages a skill is required on the core to interpret these messages. This is why the [`mycroft-rest-api-skill`](https://github.com/smartgic/mycroft-rest-api-skill) skill should be installed on the core. The API and the skill authenticate via an API key shared between both of them.
+The API will send messages to the bus but for non-native messages a skill is required on the core to interpret these messages. This is why the [`skill-rest-api`](https://github.com/smartgic/mycroft-rest-api-skill) skill should be installed on the core. The API and the skill authenticate via an API key shared between both of them.
 
 The `API_KEY` needs to be defined within the `.env` file and this same key must be defined on [home.mycroft.ai](https://home.mycroft.ai) *(see the skill README for more information)*.
 
@@ -49,11 +46,11 @@ To consume the API a user is required, this user will allow to retrieve a JSON W
 Python `virtualenv` is always a good practice to keep a clean environment but it is not a mandatory step.
 
 ```bash
-git clone https://github.com/smartgic/mycroft-api.git
-cd mycroft-api
+git clone https://github.com/smartgic/ovos-api.git
+cd ovos-api
 mkdir ~/virtualenvs
-python -m venv ~/virtualenvs/mycroft-api
-. ~/virtualenvs/mycroft-api/bin/activate
+python -m venv ~/virtualenvs/ovos-api
+. ~/virtualenvs/ovos-api/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -82,7 +79,7 @@ The `USERS_DB` should match a path to an existing JSON file that looks like this
 ```json
 [
     {
-        "user": "mycroft",
+        "user": "ovos",
         "password": "$2b$12$THfMtieVfCr3674n.15kcOmffKbJjkb8wX5bkmtP0beHVvEitP52K",
         "active": true
     },
@@ -94,7 +91,7 @@ The `USERS_DB` should match a path to an existing JSON file that looks like this
 ]
 ```
 
-The `password` field is encrypted using the `passlib[bcrypt]` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password as demonstrated below.
+The `password` field is encrypted using the `bcrypt` Python library *(part of the `requirements.txt` file)*. Use the `genpass.py` Python wrapper to generate the password as demonstrated below.
 
 ```bash
 . ~/virtualenvs/mycroft-api/bin/activate
@@ -138,11 +135,11 @@ uvicorn app.api:app --host 10.12.50.21 --port 8000
 The `docker-compose.yml` contains variables that will loaded from the `.env` file. As for the users, the file will be mounted as a volume within the container.
 
 ```bash
-cd mycroft-api
+cd ovos-api
 docker-compose --env-file .env up -d
 ```
 
-This command will download the `smartgic/mycroft-api:latest` Docker image from Docker Hub and create the `mycroft_api` Docker container.
+This command will download the `smartgic/ovos-api:latest` Docker image from Docker Hub and create the `ovos_api` Docker container.
 
 # Consume the API
 

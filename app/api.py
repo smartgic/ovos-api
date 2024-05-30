@@ -4,8 +4,7 @@
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from app.config import get_settings
-from app.routers import auth, network, system, voice
-# from app.routers import skills
+from app.routers import auth, network, system, voice, skills
 
 settings = get_settings()
 
@@ -44,7 +43,7 @@ app = FastAPI(title=settings.app_name, version=settings.app_version)
 app.openapi = custom_openapi_schema
 
 app.include_router(auth.router, prefix=settings.prefix_version)
-# app.include_router(skills.router, prefix=settings.prefix_version)
+app.include_router(skills.router, prefix=settings.prefix_version)
 app.include_router(system.router, prefix=settings.prefix_version)
 app.include_router(voice.router, prefix=settings.prefix_version)
 app.include_router(network.router, prefix=settings.prefix_version)
