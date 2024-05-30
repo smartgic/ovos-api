@@ -48,75 +48,38 @@ def get_info(sort: Optional[bool] = False) -> InfoResults:
         raise HTTPException(status_code=status_code, detail=msg) from err
 
 
-# def get_config(sort: Optional[bool] = False,
-#                core: Optional[bool] = False) -> Config:
-#     """Retrieves local or core configuration by leveraging the
-#     mycroft-api skill
+def get_config(sort: Optional[bool] = False) -> Config:
+    """Retrieves local or core configuration by leveraging skill-rest-api
 
-#     Send `"mycroft.api.config` message and wait for `mycroft.api.config.answer`
-#     message to appear on the bus.
+    Send `"ovos.api.config` message and wait for `ovos.api.config.answer`
+    message to appear on the bus.
 
-#     :param sort: Sort alphabetically the configuration
-#     :type sort: bool, optional
-#     :param core: Retrieve the core configuration
-#     :type core: bool, optional
-#     :return: Return configuration
-#     :rtype: Config
-#     """
-#     status_code: int = status.HTTP_400_BAD_REQUEST
-#     msg: str = "unable to retrieve configuration"
-#     try:
-#         payload: Dict = {
-#             "type": "mycroft.api.config",
-#             "data": {
-#                 "app_key": settings.app_key,
-#                 "core": core
-#             }
-#         }
-#         if requirements():
-#             config: JSONStructure = ws_send(
-#                 payload, "mycroft.api.config.answer")
-#             if config["context"]["authenticated"]:
-#                 if sort:
-#                     config = json.loads(json.dumps(config, sort_keys=True))
-#                 return sanitize(config["data"])
-#             status_code = status.HTTP_401_UNAUTHORIZED
-#             msg = "unable to authenticate with mycrfot-api skill"
-#             raise Exception
-#         status_code = status.HTTP_401_UNAUTHORIZED
-#         msg = "mycroft-api skill is not installed on mycroft core"
-#         raise Exception
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status_code,
-#             detail=msg) from err
-
-
-# def log_level(level: str, bus: Optional[bool] = True) -> int:
-#     """Change the log level and the bus message logging.
-
-#     Send `mycroft.debug.log` message with the log level and the bus status
-#     as payload.
-
-#     :param level: Skill ID to deactivate
-#     :type level: str
-#     :param bus: Enable or disable the bus message logging
-#     :type bus: bool, optional
-#     :return: Return HTTP 204 or 400
-#     :rtype: int
-#     """
-#     try:
-#         payload: Dict = {
-#             "type": "mycroft.debug.log",
-#             "data": {"level": level, "bus": bus},
-#         }
-#         ws_send(payload)
-#         return status.HTTP_204_NO_CONTENT
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="unable to change the services log level",
-#         ) from err
+    :param sort: Sort alphabetically the configuration
+    :type sort: bool, optional
+    :return: Return configuration
+    :rtype: Config
+    """
+    status_code: int = status.HTTP_400_BAD_REQUEST
+    msg: str = "unable to retrieve configuration"
+    try:
+        payload: Dict = {
+            "type": "ovos.api.config",
+            "data": {"app_key": settings.app_key},
+        }
+        if requirements():
+            config: JSONStructure = ws_send(payload, "ovos.api.config.answer")
+            if config["context"]["authenticated"]:
+                if sort:
+                    config = json.loads(json.dumps(config, sort_keys=True))
+                return sanitize(config["data"])
+            status_code = status.HTTP_401_UNAUTHORIZED
+            msg = "unable to authenticate with skill-rest-api"
+            raise Exception
+        status_code = status.HTTP_401_UNAUTHORIZED
+        msg = "skill-rest-api is not installed on ovos core"
+        raise Exception
+    except Exception as err:
+        raise HTTPException(status_code=status_code, detail=msg) from err
 
 
 def sleep(confirm: Optional[bool] = True, dialog: Optional[Speak] = None) -> Speak:
@@ -248,24 +211,3 @@ def caching(cache: Cache) -> JSONStructure:
         raise Exception
     except Exception as err:
         raise HTTPException(status_code=status_code, detail=msg) from err
-
-
-# def reload_config() -> int:
-#     """Reload configuration
-
-#     Send `configuration.updated` message to the bus, services will reload
-#     the configuration file.
-
-#     :return: Return HTTP 204 or 400
-#     :rtype: int
-#     """
-#     try:
-#         payload: Dict = {
-#             "type": "configuration.updated"
-#         }
-#         ws_send(payload)
-#         return status.HTTP_204_NO_CONTENT
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="unable to reload the configuration ") from err

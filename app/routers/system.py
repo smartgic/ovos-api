@@ -42,64 +42,29 @@ async def info(
     return JSONResponse(content=system.get_info(sort))
 
 
-# @router.get(
-#     "/config",
-#     response_model=ConfigResults,
-#     summary="Collect local or core configuration",
-#     description="Send `mycroft.api.config` message to the bus and wait \
-#         for `mycroft.api.config.answer` response. This route leverage the \
-#         `mycroft-api` skill.",
-#     response_description="Retrieved configuration",
-#     dependencies=[Depends(JWTBearer())])
-# async def config(
-#     sort: Optional[bool] = Query(
-#         default=False,
-#         description="Sort alphabetically the settings"),
-#     core: Optional[bool] = Query(
-#         default=False,
-#         description="Display the core configuration")) -> JSONResponse:
-#     """Collect local or core configuration
+@router.get(
+    "/config",
+    response_model=ConfigResults,
+    summary="Collect local or core configuration",
+    description="Send `mycroft.api.config` message to the bus and wait \
+        for `ovos.api.config.answer` response. This route leverage the \
+        `skill-rest-api`.",
+    response_description="Retrieved configuration",
+    dependencies=[Depends(JWTBearer())],
+)
+async def config(
+    sort: Optional[bool] = Query(
+        default=False, description="Sort alphabetically the settings"
+    )
+) -> JSONResponse:
+    """Collect local or core configuration
 
-#     :param sort: Sort alphabetically the configuration
-#     :type sort: bool, optional
-#     :param core: Display the core configuration
-#     :type core: bool, optional
-#     :return: Return the configuration
-#     :rtype: JSONResponse
-#     """
-#     return JSONResponse(content=system.get_config(sort, core))
-
-
-# @router.post(
-#     "/log",
-#     status_code=status.HTTP_200_OK,
-#     summary="Update the logging level and bus messaging",
-#     description="Send `mycroft.debug.log` message to the bus, the `bus` \
-#         parameter allows turning the logging of all bus messages \
-#         `on` or `off`",
-#     response_description="Log level and bus messages logging changed",
-#     dependencies=[Depends(JWTBearer())],
-# )
-# async def log(
-#     level: str = Query(
-#         default="info",
-#         description="Log level to set",
-#         example="debug",
-#     ),
-#     bus: Optional[bool] = Query(
-#         default=False, description="Display bus messages on each services"
-#     ),
-# ) -> int:
-#     """Update the logging level and bus messaging
-
-#     :param level: Log level to set
-#     :type level: str
-#     :param bus: Display bus messages on each services
-#     :type bus: bool, optional
-#     :return: Return status code
-#     :rtype: int
-#     """
-#     return Response(status_code=system.log_level(level, bus))
+    :param sort: Sort alphabetically the configuration
+    :type sort: bool, optional
+    :return: Return the configuration
+    :rtype: JSONResponse
+    """
+    return JSONResponse(content=system.get_config(sort))
 
 
 @router.post(
@@ -195,7 +160,7 @@ async def is_awake() -> JSONResponse:
     summary="Clear caches",
     description="Clear different types of caches. For example the `tts` \
         cache type will retrieve the current TTS engine used and delete \
-        the cached files. This route leverage the `mycroft-api` skill.",
+        the cached files. This route leverage the `skill-rest-api`.",
     response_description="Cache cleared",
     dependencies=[Depends(JWTBearer())],
 )
@@ -216,20 +181,3 @@ async def caching(
     return JSONResponse(
         status_code=status.HTTP_201_CREATED, content=system.caching(cache_type)
     )
-
-
-# @router.put(
-#     "/config",
-#     status_code=status.HTTP_204_NO_CONTENT,
-#     summary="Notify services about configuration change",
-#     description="Send `configuration.updated` message to the bus, services \
-#         will reload the configuration file.",
-#     response_description="Configuration has been reloaded",
-#     dependencies=[Depends(JWTBearer())])
-# async def reload_config() -> int:
-#     """Reload configuration
-
-#     :return: Return status code
-#     :rtype: int
-#     """
-#     return Response(status_code=system.reload_config())

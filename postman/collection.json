@@ -1,39 +1,15 @@
 {
 	"info": {
-		"_postman_id": "ed7f356a-a2db-4aac-bc1e-b9da8081f288",
+		"_postman_id": "447374a9-53a9-47aa-90aa-2500b5922483",
 		"name": "Open Voice OS",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10786770",
+		"_collection_link": "https://smartgic.postman.co/workspace/Team-Workspace~7addd88c-1cbf-4173-806b-0067e633b992/collection/10786770-447374a9-53a9-47aa-90aa-2500b5922483?action=share&source=collection_link&creator=10786770"
 	},
 	"item": [
 		{
 			"name": "Skills",
 			"item": [
-				{
-					"name": "Retrieve skill list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?sort=true",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"skills"
-							],
-							"query": [
-								{
-									"key": "sort",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Get skill settings",
 					"request": {
@@ -79,27 +55,6 @@
 					"response": []
 				},
 				{
-					"name": "Update all skills",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills/update",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"skills",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Activate a skill",
 					"request": {
 						"method": "PUT",
@@ -116,76 +71,6 @@
 								"skills",
 								"{{sample_skill}}",
 								"activate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Install skill",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"skill\": \"https://github.com/JarbasSkills/skill-parrot\",\n \"dialog\": \"the parrot skill has been installed\",\n \"lang\": \"en-us\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?confirm=true",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"skills"
-							],
-							"query": [
-								{
-									"key": "confirm",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Uninstall skill",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"skill\": \"skill-parrot.jarbasskills\",\n \"dialog\": \"the parrot skill has been uninstalled\",\n \"lang\": \"en-us\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/skills?confirm=true",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"skills"
-							],
-							"query": [
-								{
-									"key": "confirm",
-									"value": "true"
-								}
 							]
 						}
 					},
@@ -288,37 +173,6 @@
 					"response": []
 				},
 				{
-					"name": "Change services log level",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/log?level=info&bus=off",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"system",
-								"log"
-							],
-							"query": [
-								{
-									"key": "level",
-									"value": "info"
-								},
-								{
-									"key": "bus",
-									"value": "off"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Sleep mode",
 					"request": {
 						"method": "POST",
@@ -393,7 +247,7 @@
 				{
 					"name": "Clear TTS cache",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -415,27 +269,6 @@
 								"{{api_version}}",
 								"system",
 								"cache"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Reload configuration",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/config",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"system",
-								"config"
 							]
 						}
 					},
@@ -640,27 +473,6 @@
 								"{{api_version}}",
 								"network",
 								"internet"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Check for websocket connectivity",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/network/websocket",
-							"protocol": "{{api_protocol}}",
-							"host": [
-								"{{api_address}}"
-							],
-							"port": "{{api_port}}",
-							"path": [
-								"{{api_version}}",
-								"network",
-								"websocket"
 							]
 						}
 					},
