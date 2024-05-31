@@ -114,7 +114,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/config?sort=true&core=true",
+							"raw": "{{api_protocol}}://{{api_address}}:{{api_port}}/{{api_version}}/system/config?sort=true",
 							"protocol": "{{api_protocol}}",
 							"host": [
 								"{{api_address}}"
@@ -128,10 +128,6 @@
 							"query": [
 								{
 									"key": "sort",
-									"value": "true"
-								},
-								{
-									"key": "core",
 									"value": "true"
 								}
 							]
@@ -485,6 +481,20 @@
 			"item": [
 				{
 					"name": "Generate access and refresh tokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"pm.environment.set('access_token', data.access_token);",
+									"pm.environment.set('refresh_token', data.refresh_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -527,7 +537,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{refresh_token}}",
 									"type": "string"
 								}
 							]
@@ -536,7 +546,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"access_token\": \"{{access_token}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,7 +577,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "{{access_token}}",
 				"type": "string"
 			}
 		]
