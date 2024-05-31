@@ -603,7 +603,7 @@
 		},
 		{
 			"key": "api_protocol",
-			"value": "https"
+			"value": "http"
 		},
 		{
 			"key": "api_version",
@@ -611,11 +611,11 @@
 		},
 		{
 			"key": "sample_skill",
-			"value": "mycroft-joke.mycroftai"
+			"value": "skill-ovos-hello-world.openvoiceos"
 		},
 		{
 			"key": "user",
-			"value": "mycroft",
+			"value": "ovos",
 			"type": "string"
 		},
 		{
