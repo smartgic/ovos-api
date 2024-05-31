@@ -175,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"going to sleep\",\"lang\": \"en-us\"}",
+							"raw": "{\"utterance\": \"going to sleep\", \"lang\": \"en-us\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,7 +211,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"i'm awake\", \"lang\": \"em-us\"}",
+							"raw": "{\"utterance\": \"i'm awake\", \"lang\": \"en-us\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -282,7 +282,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"mycroft ai for the win\", \"lang\": \"en-us\"}",
+							"raw": "{\"utterance\": \"open voice o.s. for the win baby!\", \"lang\": \"en-us\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -342,7 +342,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -373,7 +373,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -404,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"utterance\": \"merry christmas\", \"lang\": \"en-us\"}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
